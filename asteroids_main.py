@@ -78,10 +78,14 @@ class GameRunner:
         ship_p = ship.get_place()
         ship_s = ship.get_speed()
         ship.set_place(self.set_place(ship_p, ship_s))
+        asteroids_crashed = []
         for i in asteroids:
             asteroids[i].set_place(self.set_place(asteroids[i].get_place(),
-                                                    asteroids[i].get_speed()))
-            self.intersection(ship, asteroids[i])
+                                                  asteroids[i].get_speed()))
+            if self.intersection(ship, asteroids[i]):
+                asteroids_crashed.append(i)
+        for j in asteroids_crashed:
+            del asteroids[j]
 
     def set_place(self, spot, speed):
             new_x_spot = Screen.SCREEN_MIN_X + \
@@ -94,10 +98,12 @@ class GameRunner:
 
     def intersection(self, ship, asteroid):
         if asteroid.has_intersection_with(ship):
-            print(asteroid)
             self.__screen.show_message('ouch!', 'your ship got hit')
             ship.lower_hit_point()
             self.__screen.remove_life()
+            self.__screen.unregister_asteroid(asteroid)
+            return True
+        return False
 
 
 def main(amount):
