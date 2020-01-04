@@ -31,7 +31,9 @@ class GameRunner:
 
     def _game_loop(self):
         # TODO: Your code goes here
-        pass
+        ship = self.__ship
+        Screen.draw_ship(ship.get_x_place(), ship.get_y_place(),
+                         ship.get_angle())
 
 
 def main(amount):
