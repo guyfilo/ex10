@@ -54,8 +54,8 @@ class GameRunner:
         self.draw_objects()
         if screen.is_up_pressed():
             angle = math.radians(ship.get_angle())
-            ship.set_x_speed(ship.get_x_speed() + math.cos(angle))
-            ship.set_y_speed(ship.get_y_speed() + math.sin(angle))
+            ship.set_speed((ship.get_speed()[0] + math.cos(angle)
+                           , ship.get_speed()[1] + math.sin(angle)))
         if screen.is_left_pressed():
             ship.set_angle(ship.get_angle() + 7)
         if screen.is_right_pressed():
@@ -66,42 +66,42 @@ class GameRunner:
         ship = self.__ship
         screen = self.__screen
         asteroids = self.__asteroids
-        screen.draw_ship(ship.get_x_place(), ship.get_y_place(),
+        screen.draw_ship(ship.get_place()[0], ship.get_place()[1],
                          ship.get_angle())
         for i in asteroids:
-            screen.draw_asteroid(asteroids[i], asteroids[i].get_x_place(),
-                                 asteroids[i].get_y_place())
+            screen.draw_asteroid(asteroids[i], asteroids[i].get_place()[0],
+                                 asteroids[i].get_place()[1])
 
     def move_objects(self):
         ship = self.__ship
         asteroids = self.__asteroids
-        ship.set_x_place(self.set_place(ship.get_x_place(),
-                                        ship.get_x_speed(), 'x'))
-        ship.set_y_place(self.set_place(ship.get_y_place(),
-                                        ship.get_y_speed(), 'y'))
+        ship_p = ship.get_place()
+        ship_s = ship.get_speed()
+        ship.set_place(self.set_place(ship_p, ship_s))
         for i in asteroids:
-            asteroids[i].set_x_place(self.set_place(asteroids[i].get_x_place(),
-                                                    asteroids[i].get_x_speed(), 'x'))
-            asteroids[i].set_y_place(self.set_place(asteroids[i].get_y_place(),
-                                                    asteroids[i].get_y_speed(), 'x'))
+            asteroids[i].set_place(self.set_place(asteroids[i].get_place(),
+                                                    asteroids[i].get_speed()))
 
-    def set_place(self, spot, speed, direction):
-        if direction == 'x':
-            new_spot = Screen.SCREEN_MIN_X + \
-                       (spot + speed - Screen.SCREEN_MIN_X) % \
+    def set_place(self, spot, speed):
+            new_x_spot = Screen.SCREEN_MIN_X + \
+                       (spot[0] + speed[0] - Screen.SCREEN_MIN_X) % \
                        (Screen.SCREEN_MAX_X - Screen.SCREEN_MIN_X)
-            return new_spot
-        elif direction == 'y':
-            new_spot = Screen.SCREEN_MIN_Y + \
-                       (spot + speed - Screen.SCREEN_MIN_Y) % \
+            new__y_spot = Screen.SCREEN_MIN_Y + \
+                       (spot[1] + speed[1] - Screen.SCREEN_MIN_Y) % \
                        (Screen.SCREEN_MAX_Y - Screen.SCREEN_MIN_Y)
-            return new_spot
+            return (new_x_spot, new__y_spot)
 
 
 def main(amount):
     runner = GameRunner(amount)
     runner.run()
 
+
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        main(int(sys.argv[1]))
+    else:
+        main(DEFAULT_ASTEROIDS_NUM)
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
