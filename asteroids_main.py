@@ -42,6 +42,8 @@ class GameRunner:
         if screen.is_up_pressed():
             ship.set_x_speed(ship.get_x_speed() + math.cos(ship.get_angle()))
             ship.set_y_speed(ship.get_y_speed() + math.sin(ship.get_angle()))
+        ship.set_x_place(self.set_place(ship.get_x_place(), ship.get_x_speed(), 'x'))
+        ship.set_y_place(self.set_place(ship.get_y_place(), ship.get_y_speed(), 'y'))
     
     def set_place(self, spot, speed, direction):
         if direction == 'x':
