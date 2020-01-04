@@ -90,6 +90,13 @@ class GameRunner:
                        (spot[1] + speed[1] - Screen.SCREEN_MIN_Y) % \
                        (Screen.SCREEN_MAX_Y - Screen.SCREEN_MIN_Y)
             return (new_x_spot, new__y_spot)
+        
+    def intersection(self, ship, asteroid):
+        if asteroid.has_intersection_with(ship):
+            print(asteroid)
+            self.__screen.show_message('ouch!', 'your ship got hit')
+            ship.lower_hit_point()
+            self.__screen.remove_life()
 
 
 def main(amount):
