@@ -81,6 +81,7 @@ class GameRunner:
         for i in asteroids:
             asteroids[i].set_place(self.set_place(asteroids[i].get_place(),
                                                     asteroids[i].get_speed()))
+            self.intersection(ship, asteroids[i])
 
     def set_place(self, spot, speed):
             new_x_spot = Screen.SCREEN_MIN_X + \
@@ -90,7 +91,7 @@ class GameRunner:
                        (spot[1] + speed[1] - Screen.SCREEN_MIN_Y) % \
                        (Screen.SCREEN_MAX_Y - Screen.SCREEN_MIN_Y)
             return (new_x_spot, new__y_spot)
-        
+
     def intersection(self, ship, asteroid):
         if asteroid.has_intersection_with(ship):
             print(asteroid)
@@ -103,12 +104,6 @@ def main(amount):
     runner = GameRunner(amount)
     runner.run()
 
-
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        main(int(sys.argv[1]))
-    else:
-        main(DEFAULT_ASTEROIDS_NUM)
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
