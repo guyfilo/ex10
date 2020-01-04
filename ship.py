@@ -17,6 +17,9 @@ class Ship:
 
     def get_y_speed(self):
         return self.__y_speed
+    
+    def get_angle(self):
+        return self.__angle
 
     def set_x_place(self, place):
         self.__x_place = place
