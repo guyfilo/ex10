@@ -35,7 +35,16 @@ class GameRunner:
         screen = self.__screen
         screen.draw_ship(ship.get_x_place(), ship.get_y_place(),
                          ship.get_angle())
-
+    
+    def set_place(self, spot, speed, direction):
+        if direction == 'x':
+            new_spot = Screen.SCREEN_MIN_X + (spot + speed - Screen.SCREEN_MIN_X) % \
+                       (Screen.SCREEN_MAX_X - Screen.SCREEN_MIN_X)
+            return new_spot
+        elif direction == 'y':
+            new_spot = Screen.SCREEN_MIN_Y + (spot + speed - Screen.SCREEN_MIN_Y) % \
+                       (Screen.SCREEN_MAX_Y - Screen.SCREEN_MIN_Y)
+            return new_spot
 
 def main(amount):
     runner = GameRunner(amount)
