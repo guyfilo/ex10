@@ -1,5 +1,5 @@
 class Ship:
-    __size = 1
+    __size = 10
     __default_hp = 3
 
     def __init__(self, x_place, y_place, x_speed,  y_speed, angle):
@@ -9,6 +9,7 @@ class Ship:
         self.__y_speed = y_speed
         self.__angle = angle
         self.__hit_points = self.__default_hp
+        self.__score = 0
 
     def get_place(self):
         return self.__x_place, self.__y_place
@@ -32,6 +33,12 @@ class Ship:
 
     def lower_hit_point(self):
         self.__hit_points -= 1
+
+    def get_score(self):
+        return self.__score
+
+    def add_score(self, points):
+        self.__score += points
 
     def __len__(self):
         return self.__size
