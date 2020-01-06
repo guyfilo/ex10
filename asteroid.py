@@ -26,6 +26,9 @@ class Asteroid:
                     + (obj_place[1] - self.__y_place)**2) ** 0.5
         return distance <= self.__size + len(obj)
 
+    def get_size(self):
+        return self.__size
+
     def __len__(self):
         return self.__size*10 - 5
 
